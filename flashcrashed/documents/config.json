@@ -1,0 +1,11 @@
+{
+  "log_level": "CRITICAL",
+
+  "Database_path": "sqlite:///documents/PriceData.db",
+
+  "tickers": [
+    "BTCUSD",
+    "LTCUSD",
+    "ETHUSD"
+  ]
+}
