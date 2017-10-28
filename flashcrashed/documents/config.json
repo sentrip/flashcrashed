@@ -3,7 +3,7 @@
 
   "Database_path": "sqlite:///documents/PriceData.db",
 
-  "tickers": [
+  "coin_tickers": [
     "BTCUSD",
     "LTCUSD",
     "ETHUSD"

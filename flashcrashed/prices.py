@@ -1,8 +1,8 @@
 from multiprocessing.connection import Listener
 from threading import Thread, Lock
 
+from crypto import CoinStream
 from flashcrashed import setup_log, load_config
-from prices.coin import CoinStream
 
 
 class Prices:

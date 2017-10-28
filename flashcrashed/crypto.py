@@ -12,7 +12,7 @@ class CoinStream:
     def __init__(self):
         config = load_config()
         self.log_level = config['log_level']
-        self.tickers = config['tickers']
+        self.tickers = config['coin_tickers']
         # No api keys required for reading public data
         self.api = BtfxWss("", "", log_level=self.btfxwss_log_level)
         self.queues = {}
@@ -56,6 +56,7 @@ class CoinStream:
         while data in self.seen:
             self.log.debug('Filtering already seen tick from %s queue', ticker)
             data, _ = self.queues[ticker].get()
+        # Normalizes return type and removes timestamp
         data = [data[0][1:]] if isinstance(data[0][0], int) else [i[1:] for i in data[0]]
         self.seen.append(data)
         self.log.debug('Received data from %s queue', ticker)
