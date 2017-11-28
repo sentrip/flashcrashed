@@ -1,7 +1,6 @@
-#from flashcrashed.api import setup_log
 import logging
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('flashcrashed')
 
 
 class SimpleDetector:

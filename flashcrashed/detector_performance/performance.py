@@ -9,11 +9,6 @@ if __name__ == "__main__":
     LEVEL = 'ERROR'
     log = logging.getLogger('flashcrashed')
     log.setLevel(LEVEL)
-    #stream = logging.StreamHandler(sys.stdout)
-    #stream.setLevel(LEVEL)
-    #stream.setFormatter(logging.Formatter(fmt='%(levelname)-8s: %(name)-15s: %(msg)s'))
-    #log.addHandler(stream)
-
     detector = SimpleDetector()
 
     register(id='FlashGym-v1', entry_point='detector_performance.flashgym:FlashGym',)
