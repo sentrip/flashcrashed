@@ -30,11 +30,11 @@ class FlashGym(gym.Env):
 
     @property
     def state(self):
-        state = [self.history[-1]] + [self.change(self.history[-1], d) for d in self.changes]
+        state = [self.change(self.history[-1], d) for d in self.changes] + [self.history[-1]]
         return np.array(state)
 
     def _reset(self):
-        self.episode_length = 50000
+        self.episode_length = 100000
         self.episode_reward = 0
         self.market = FlashedMarket()
         self.market.crash_start += self.history_length

@@ -100,7 +100,7 @@ class FlashedMarket:
 
         if self.after_crash:
             self.position = 0
-            self.crash_start = random.randint(50, 10000)
+            self.crash_start = random.randint(500, 3000)
             self.crash = FlashCrash()
             self.bought, self.sold = False, False
             self.n_crashes += 1

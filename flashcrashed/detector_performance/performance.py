@@ -1,5 +1,4 @@
 import logging
-import sys
 
 import gym
 from gym.envs.registration import register
@@ -7,13 +6,13 @@ from gym.envs.registration import register
 from flashcrashed.detectors import *
 
 if __name__ == "__main__":
-    # LEVEL = 'ERROR'
-    # log = logging.getLogger('flashcrashed')
-    # log.setLevel(LEVEL)
-    # stream = logging.StreamHandler(sys.stdout)
-    # stream.setLevel(LEVEL)
-    # stream.setFormatter(logging.Formatter(fmt='%(levelname)-8s: %(name)-15s: %(msg)s'))
-    # log.addHandler(stream)
+    LEVEL = 'ERROR'
+    log = logging.getLogger('flashcrashed')
+    log.setLevel(LEVEL)
+    #stream = logging.StreamHandler(sys.stdout)
+    #stream.setLevel(LEVEL)
+    #stream.setFormatter(logging.Formatter(fmt='%(levelname)-8s: %(name)-15s: %(msg)s'))
+    #log.addHandler(stream)
 
     detector = SimpleDetector()
 
@@ -41,7 +40,7 @@ if __name__ == "__main__":
             caught_rises += 1
             sold_after_crash = True
 
-        if not env.market.crashing and not env.market.rising:
+        if not env.market.crashing and not env.market.rising and not env.market.after_crash:
             crashed, bought_in_crash, sold_after_crash = False, False, False
 
     print('Average reward: {:.2f}'.format(env.average_episode_reward))
