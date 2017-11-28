@@ -1,5 +1,6 @@
 import argparse
 import logging
+import sys
 import time
 from queue import Queue
 
@@ -12,10 +13,13 @@ parser.add_argument('--symbols', type=str, default='BTCUSD', help='symbols to tr
 parser.add_argument('--log-level', type=str, default='INFO', help='logging level for trader')
 args = parser.parse_args()
 
-lg = logging.getLogger()
+lg = logging.getLogger('flashcrashed')
 lg.setLevel(args.log_level)
-lg.handlers[0].setFormatter(logging.Formatter(fmt='%(asctime)-15s: %(levelname)-8s: %(message)s',
-                                              datefmt='%Y-%m-%d %I:%M:%S'))
+stream = logging.StreamHandler(stream=sys.stdout)
+stream.setLevel(args.log_level)
+stream.setFormatter(logging.Formatter(fmt='%(asctime)-15s: %(levelname)-8s: %(message)s',
+                                      datefmt='%Y-%m-%d %I:%M:%S'))
+lg.addHandler(stream)
 
 if '/' in args.symbols:
     with open(args.symbols) as f:
