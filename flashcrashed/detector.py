@@ -15,11 +15,11 @@ class Detector(ABC):
 
     @abstractmethod
     def reset(self):
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @abstractmethod
     def _predict(self, price):
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     def predict(self, price):
         action = self._predict(price)

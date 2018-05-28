@@ -6,17 +6,24 @@ import os
 from .detector import BasicDetector
 
 
+_type_key_map = {
+    'tickers': 'bid',
+    'trades': 'price'
+}
+
+
 class TradeDataStreamer(Streamer):
     def __init__(self, _type, symbol, data, topic=None):
         super(TradeDataStreamer, self).__init__(topic=topic)
         self.type = _type
         self.symbol = symbol
         self.data = data
+        self.key = _type_key_map.get(_type, 'close')
 
     def stream(self):
         while self.alive:
             data = self.data.get(self.type, self.symbol)
-            yield Event((self.symbol, data['bid']))
+            yield Event((self.symbol, data[self.key]))
 
 
 class TradeListener(Listener):
@@ -53,7 +60,7 @@ class TradeListener(Listener):
         self.trader.close()
 
     def on_event(self, event):
-        self.on_price(*event.data)
+        return self.on_price(*event.data)
 
 
 class NotificationListener(Listener):
@@ -70,5 +77,5 @@ class NotificationListener(Listener):
         )
 
     def on_event(self, event):
-        self.notify_traded(*event.data)
-
+        if event.data:
+            self.notify_traded(*event.data)
