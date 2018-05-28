@@ -47,7 +47,8 @@ class FlashGym(gym.Env):
                 roi = round(self.sell_price / self.buy_price * 100, 2)
             else:
                 roi = 0
-            self.market.crashes[-1].update(bought=self.bought, sold=self.sold, roi=roi)
+            self.market.crashes[-1].update(bought=self.bought,
+                                           sold=self.sold, roi=roi)
             self.bought, self.sold = False, False
         try:
             self.last_price = next(self.market)
@@ -64,7 +65,8 @@ class FlashGym(gym.Env):
             return -0.1
         self.bought = True
         self.buy_price = self.last_price
-        return 1 - 2 * abs(self.market.position - self.market.crash_mid) / self.market.drop_duration
+        return 1 - 2 * abs(self.market.position -
+                           self.market.crash_mid) / self.market.drop_duration
 
     @property
     def sell_reward(self):
@@ -76,4 +78,5 @@ class FlashGym(gym.Env):
         self.sell_price = self.last_price
         if self.real:
             return int(self.buy_price <= self.sell_price * 3) * 2 - 1.
-        return 1 - 2 * max(self.market.crash_end - self.market.position, 0) / self.market.rise_duration
+        return 1 - 2 * max(self.market.crash_end -
+                           self.market.position, 0) / self.market.rise_duration

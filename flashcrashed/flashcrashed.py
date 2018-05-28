@@ -27,8 +27,8 @@ class TradeDataStreamer(Streamer):
 
 
 class TradeListener(Listener):
-    def __init__(self, key, secret, detector_class=BasicDetector, filters=None):
-        super(TradeListener, self).__init__(filters=filters)
+    def __init__(self, key, secret, detector_class=BasicDetector, **kwargs):
+        super(TradeListener, self).__init__(**kwargs)
         self.trader = Trader(key, secret)
         self.detector_class = detector_class
         self.detectors = {}

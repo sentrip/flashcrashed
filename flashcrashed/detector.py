@@ -24,9 +24,11 @@ class Detector(ABC):
     def predict(self, price):
         action = self._predict(price)
         if action == 0:
-            crash_log.info('%6s - CRASH detected at %.2f' % (self.symbol, price))
+            crash_log.info(
+                '%6s - CRASH detected at %.2f' % (self.symbol, price))
         elif action == 2:
-            crash_log.info('%6s - RISE detected at %.2f' % (self.symbol, price))
+            crash_log.info(
+                '%6s - RISE detected at %.2f' % (self.symbol, price))
         else:
             log.info('%6s - Doing nothing at %.2f' % (self.symbol, price))
 
@@ -56,8 +58,13 @@ class BasicDetector(Detector):
 
     def _predict(self, price):
         self.prices.append(price)
-        avg_price = sum(list(sorted(self.prices))[-int(self.history_length/2):]) / int(self.history_length/2)
-        if price <= avg_price / self.drop_ratio and len(self.prices) == self.prices.maxlen and not self.bought:
+        prices = list(sorted(self.prices))[-int(self.history_length/2):]
+        avg_price = sum(prices) / int(self.history_length/2)
+        if (
+            price <= avg_price / self.drop_ratio
+            and len(self.prices) == self.prices.maxlen
+            and not self.bought
+        ):
             self.bought = True
             self.buy_price = price
             return 0
