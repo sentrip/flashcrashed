@@ -17,9 +17,12 @@ class FlashGym(gym.Env):
         self.bought, self.sold = False, False
         self.buy_price, self.sell_price = 0, 0
 
-    def _seed(self, seed=None):
+    def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
         return [seed]
+
+    def render(self, mode='human'):
+        pass
 
     def reset(self):
         self.wait = 0
