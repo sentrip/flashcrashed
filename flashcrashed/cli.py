@@ -3,8 +3,8 @@
 """Console script for flashcrashed."""
 import importlib
 import logging
+import logging.handlers
 import os
-import sys
 import signal
 
 from btfx_trader import get_symbols, PublicData
@@ -13,6 +13,8 @@ import click
 import gym
 
 from .flashcrashed import TradeDataStreamer, TradeListener
+
+TESTING = False
 
 
 @click.command('Run flash-crash price watcher')
@@ -23,20 +25,31 @@ from .flashcrashed import TradeDataStreamer, TradeListener
 @click.option('--symbols', default='__get_all__',
               help='Cryptocurrency symbols to monitor for flash crashes '
                    '(by default it monitors all symbols)')
-@click.option('--detector', default='flashcrashed.detector.BasicDetector',
+@click.option('--detector',
+              default='flashcrashed.detector.BasicDetector',
               help='Class to use for detecting flash crashes')
 @click.option('--notifier',
               default='flashcrashed.flashcrashed.NotificationListener',
               help='Class to use to notify that a flash crash has occurred')
-def main(key, secret, type, symbols, detector, notifier):
+@click.option('--log-level', default='INFO',
+              help='Logging level of application')
+@click.option('--log-file', default='log.txt',
+              help='File to output main logs of application')
+@click.option('--crash-log-file', default='crash_log.txt',
+              help='File to output logs of any crashes that occur')
+def main(key, secret, type, symbols, detector, notifier,
+         log_level, log_file, crash_log_file):
     """Console script for flashcrashed."""
-    click.echo("")
 
     hive = Hive()
     if symbols == '__get_all__':
         symbols = get_symbols()
     else:
         symbols = symbols.split(',')
+
+    click.echo(
+        "Running flashcrashed price-watcher for %d symbols" % len(symbols)
+    )
 
     trade_data = PublicData(types=[type], symbols=symbols)
     for symbol in symbols:
@@ -51,7 +64,8 @@ def main(key, secret, type, symbols, detector, notifier):
     hive.add(trade)
     signal.signal(signal.SIGINT, lambda *a, **kwa: hive.close())
 
-    # todo: setup logging
+    if not TESTING:
+        _setup_logging(log_level, log_file, crash_log_file)
 
     trade_data.connect()
     hive.run()
@@ -73,8 +87,15 @@ def performance(detector, episodes):
         os.path.join(os.path.abspath(__name__.split('.')[0]),
                      'market/real_crashes')
     ))]
-    detector = _import_class(detector)()
 
+    click.echo(
+        "Running flashcrashed performance "
+        "evaluation on detector at '%s'" % detector
+    )
+    click.echo('Number of generated episodes: %d' % episodes[0])
+    click.echo('Number of real episodes: %d' % episodes[1])
+
+    detector = _import_class(detector)()
     for gym_name, kw, n_episodes in zip(names, kwargs, episodes):
         env = gym.make(gym_name)
         missed_crashes = []
@@ -149,3 +170,31 @@ def _import_class(path):
     *path, class_name = path.split('.')
     module = importlib.import_module('.'.join(path))
     return getattr(module, class_name)
+
+
+def _setup_logging(log_level, log_file, crash_log_file):
+    log = logging.getLogger('flashcrashed')
+    trade_log = logging.getLogger('btfx_trader')
+    crash_log = logging.getLogger('flashcrashed.crash')
+    crash_log.propagate = False
+
+    for l in [log, trade_log, crash_log]:
+        l.setLevel(log_level)
+
+    formatter = logging.Formatter(
+        fmt='%(asctime)-15s: %(levelname)-8s: %(message)s',
+        datefmt='%Y-%m-%d %I:%M:%S'
+    )
+
+    handler = logging.handlers.RotatingFileHandler(
+        log_file, mode='a', maxBytes=1024 * 1024)
+    crash_handler = logging.handlers.RotatingFileHandler(
+        crash_log_file, mode='a', maxBytes=1024 * 1024)
+
+    for h in [handler, crash_handler]:
+        h.setLevel(log_level)
+        h.setFormatter(formatter)
+
+    log.addHandler(handler)
+    trade_log.addHandler(crash_handler)
+    crash_log.addHandler(crash_handler)

@@ -109,5 +109,6 @@ def patched_bitfinex(monkeypatch):
     monkeypatch.setattr('flashcrashed.flashcrashed.Client', FakeTwilioClient)
     monkeypatch.setattr('flashcrashed.cli.get_symbols', _get_symbols)
     monkeypatch.setattr('flashcrashed.cli.PublicData', partial(FakeApi, long=True))
+    monkeypatch.setattr('flashcrashed.cli.TESTING', True)
     yield FakeTrader, FakeMessages
 
