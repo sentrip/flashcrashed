@@ -77,5 +77,4 @@ class NotificationListener(Listener):
         )
 
     def on_event(self, event):
-        if event.data:
-            self.notify_traded(*event.data)
+        self.notify_traded(*event.data)

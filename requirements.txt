@@ -1,6 +1,7 @@
+btfx_trader>=0.1.3
+pybeehive>=0.1.4
+click>=6.7
 pandas>=0.20.3
 numpy>=1.13.3
 gym>=0.9.4
 twilio>=6.9.1
-btfx_trader>=0.1.3
-pybeehive>=0.1.3

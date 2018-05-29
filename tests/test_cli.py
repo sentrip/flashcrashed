@@ -2,7 +2,7 @@ from threading import Thread
 from _thread import interrupt_main
 import pytest
 import time
-from flashcrashed.cli import main
+from flashcrashed.cli import main, performance
 
 
 def test_main(patched_bitfinex):
@@ -22,3 +22,8 @@ def test_main(patched_bitfinex):
         "Incorrect notification message"
     assert notifier.calls[1][1]['body'].startswith('BTCUSD was SOLD'), \
         "Incorrect notification message"
+
+
+def test_performance():
+    with pytest.raises(SystemExit):
+        performance([])
