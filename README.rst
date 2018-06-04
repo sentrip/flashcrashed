@@ -41,9 +41,9 @@ Installation
 ------------
 To install flashcrashed, do:
 
-.. code-block:: console
+.. code-block:: shell
 
-    $ pip install flashcrashed
+    pip install flashcrashed
 
 
 Basic Usage
@@ -51,20 +51,21 @@ Basic Usage
 
 To use flashcrashed, do:
 
-.. code-block:: console
+.. code-block:: shell
 
     flashcrashed <BITFINEX_KEY> <BITFINEX_SECRET>
 
 
 To test the performance of a detector, do:
 
-.. code-block:: console
+.. code-block:: shell
 
     flashtest
 
 The default detector used is the detector.SimpleDetector. To use your own:
 
-.. code-block::python
+.. code-block:: python
+
     # my_detector.py
     from flashcrashed.detector import Detector
 
@@ -73,16 +74,17 @@ The default detector used is the detector.SimpleDetector. To use your own:
             # Return: 0 - BUY, 1 - HOLD (do nothing), 2 - SELL
             return 1
 
+
 To test its performance:
 
-.. code-block:: console
+.. code-block:: shell
 
     flashtest --detector my_detector.CustomDetector
 
 
 To run flashcrashed with custom detector:
 
-.. code-block:: console
+.. code-block:: shell
 
     flashcrashed --detector my_detector.CustomDetector
 

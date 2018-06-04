@@ -12,3 +12,9 @@ History
 ------------------
 
 * Updated README
+
+
+0.1.2 (2018-06-04)
+------------------
+
+* Fix rendering of docs
