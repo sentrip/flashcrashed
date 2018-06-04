@@ -32,7 +32,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    description="Minimal library for autotrading cryptocurrencies on Bitfinex",
+    description="Minimal library for detecting flash crashes in cryptocurrency prices on Bitfinex",
     entry_points={
         'console_scripts': [
             'flashcrashed=flashcrashed.cli:main',

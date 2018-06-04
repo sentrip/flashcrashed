@@ -18,3 +18,9 @@ History
 ------------------
 
 * Fix rendering of docs
+
+
+0.1.2 (2018-06-04)
+------------------
+
+* Updated project description
