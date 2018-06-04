@@ -22,7 +22,7 @@ flashcrashed
 
 
 
-Minimal library for autotrading cryptocurrencies on Bitfinex
+Minimal library for detecting flash crashes in cryptocurrency prices on Bitfinex
 
 
 * Free software: GNU General Public License v3
@@ -32,7 +32,62 @@ Minimal library for autotrading cryptocurrencies on Bitfinex
 Features
 --------
 
-* TODO
+* CLI for monitoring cryptocurrency prices for flash crashes
+* CLI for testing performance of a flash crash detector
+* Configurable flash crash detector for custom price monitoring
+
+
+Installation
+------------
+To install flashcrashed, do:
+
+.. code-block:: shell
+
+    pip install flashcrashed
+
+
+Basic Usage
+-----------
+
+To use flashcrashed, do:
+
+.. code-block:: shell
+
+    flashcrashed <BITFINEX_KEY> <BITFINEX_SECRET>
+
+
+To test the performance of a detector, do:
+
+.. code-block:: shell
+
+    flashtest
+
+The default detector used is the detector.SimpleDetector. To use your own:
+
+.. code-block::python
+    # my_detector.py
+    from flashcrashed.detector import Detector
+
+    class CustomDetector(Detector):
+        def predict(self, price):
+            # Return: 0 - BUY, 1 - HOLD (do nothing), 2 - SELL
+            return 1
+..
+
+To test its performance:
+
+.. code-block:: shell
+
+    flashtest --detector my_detector.CustomDetector
+
+
+To run flashcrashed with custom detector:
+
+.. code-block:: shell
+
+    flashcrashed --detector my_detector.CustomDetector
+
+
 
 Credits
 -------

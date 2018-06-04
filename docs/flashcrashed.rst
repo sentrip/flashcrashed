@@ -1,13 +1,6 @@
 flashcrashed package
 ====================
 
-Subpackages
------------
-
-.. toctree::
-
-    flashcrashed.market
-
 Submodules
 ----------
 
