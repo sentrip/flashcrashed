@@ -7,7 +7,7 @@ flashcrashed
         :target: https://pypi.python.org/pypi/flashcrashed
 
 .. image:: https://img.shields.io/travis/sentrip/flashcrashed.svg
-        :target: https://travis-ci.org/sentrip/flashcrashed
+        :target: https://travis-ci.com/sentrip/flashcrashed
 
 .. image:: https://readthedocs.org/projects/flashcrashed/badge/?version=latest
         :target: https://flashcrashed.readthedocs.io/en/latest/?badge=latest
