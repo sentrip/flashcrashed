@@ -25,7 +25,7 @@ flashcrashed
 Minimal library for detecting flash crashes in cryptocurrency prices on Bitfinex
 
 
-* Free software: GNU General Public License v3
+* Free software: `MIT License <https://github.com/sentrip/flashcrashed/blob/master/LICENSE>`_
 * Documentation: https://flashcrashed.readthedocs.io.
 
 
@@ -87,13 +87,3 @@ To run flashcrashed with custom detector:
 .. code-block:: shell
 
     flashcrashed --detector my_detector.CustomDetector
-
-
-
-Credits
--------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
